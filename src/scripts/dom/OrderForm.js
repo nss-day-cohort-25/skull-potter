@@ -98,25 +98,27 @@ const buildOrderForm = function (id) {
         order.textContent = "Order Animal"
         order.id = `animalOrder--${animal.id}`
         order.onclick = function (event) {
-            console.log(event.target.id.split("--")[1])
-            $("#order-form").empty()
 
-            /*
-                Only include modules in the event listener when
-                you **only** need it for the event. This eliminates
-                circular dependency problems
-            */
-            const showCatalog = require("./DisplayCatalog")
-            showCatalog()
+            $(".container").animate({
+                opacity: 0,
+                width: "20%"
+            }, 1500, function() {
+                $(".container").before("<h1 class='alert--complete'>Order Complete</h1>")
 
+                $(".alert--complete").animate({
+                    opacity: 0
+                }, 1500, function () {
+                    /*
+                        Only include modules in the event listener when
+                        you **only** need it for the event. This eliminates
+                        circular dependency problems
+                    */
+                    const showCatalog = require("./DisplayCatalog")
+                    $("#order-form").empty()
+                    showCatalog()
+                })
 
-
-            // $(".container").animate({
-            //     opacity: 0,
-            //     width: "20%"
-            // }, 1500, function() {
-            //     $(".container").before("<h1 class='alert--complete'>Order Complete</h1>")
-            // });
+            });
         }
         jumbotron.appendChild(order)
         parentContainer.appendChild(jumbotron)
