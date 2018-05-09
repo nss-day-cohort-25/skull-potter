@@ -2,6 +2,7 @@
 const $ = require("jquery")
 const api = require("../api/APIManager")
 
+
 const buildOrderForm = function (id) {
 
     // What customer selected
@@ -98,23 +99,29 @@ const buildOrderForm = function (id) {
         order.id = `animalOrder--${animal.id}`
         order.onclick = function (event) {
             console.log(event.target.id.split("--")[1])
-            $(".container").animate({
-                opacity: 0,
-                width: "20%"
-            }, 1500, function() {
-                $(".container").before("<h1 class='alert--complete'>Order Complete</h1>")
+            $("#order-form").empty()
+
+            /*
+                Only include modules in the event listener when
+                you **only** need it for the event. This eliminates
+                circular dependency problems
+            */
+            const showCatalog = require("./DisplayCatalog")
+            showCatalog()
 
 
-            });
+
+            // $(".container").animate({
+            //     opacity: 0,
+            //     width: "20%"
+            // }, 1500, function() {
+            //     $(".container").before("<h1 class='alert--complete'>Order Complete</h1>")
+            // });
         }
         jumbotron.appendChild(order)
-
         parentContainer.appendChild(jumbotron)
-
-
         output.append(parentContainer)
     })
-
 }
 
 module.exports = buildOrderForm

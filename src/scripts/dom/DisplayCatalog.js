@@ -1,5 +1,6 @@
 // Purpose: Display HTML representations of all animals in API
 const APIManager = require("../api/APIManager")
+const orderForm = require("./OrderForm")
 const $ = require("jquery")
 
 const animalList = function () {
@@ -27,12 +28,10 @@ const animalList = function () {
         $(".catalogItem").on("click", function (event) {
             console.log(event.currentTarget.id)
             // Display order form for this animal
+            $("#animal-list").empty()
+            orderForm(event.currentTarget.id)
         })
-
-
     })
-
 }
-
 
 module.exports = animalList
